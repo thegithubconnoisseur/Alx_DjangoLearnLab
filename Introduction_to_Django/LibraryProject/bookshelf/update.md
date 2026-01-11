@@ -1,13 +1,8 @@
 ########## update.md ##########
->>> Book.objects.filter(title = "1984").update(title = "Nineteen Eighty-Four")
 
-# Output:
-1
-
-
->>> book = Book.objects.get(title = "Nineteen Eighty-Four")
->>> book.save()
+>>> book = Book.objects.get(id = 1)
 >>> book
-
-# Output:
+<Book: 1984>
+>>> book.title = "Nineteen Eighty-Four"
+>>> book
 <Book: Nineteen Eighty-Four>
