@@ -1,8 +1,8 @@
 from models import *
 
 author_name = "Joshua"
-author = Author.objects.get(name = author_name)
-books_by_author = Book.objects.filter(author = author)
+author = Author.objects.get(name=author_name)
+books_by_author = Book.objects.filter(author=author)
 
 
 for book in books_by_author:
