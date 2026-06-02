@@ -11,4 +11,4 @@ for book in books_by_author:
 library_name = "mosque"
 library = Library.objects.get(name=library_name)
 books_in_lib = library.books.all()
-librarian = Librarian.objects.filter(library=library)
+librarian = Librarian.objects.get(library=library)
