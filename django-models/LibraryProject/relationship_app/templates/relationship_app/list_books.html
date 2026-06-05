@@ -12,5 +12,12 @@
         <li>{{book.title}} by {{book.author.name}}</li>
         {% endfor %}
     </ul>
+    <p>
+    <!--a href = "{% url "logout" %}">Logout</a-->
+    <form method = "post" action = "{% url 'logout' %}">
+        {% csrf_token %}
+        <button type = 'submit'>Logout</button>
+    </form>
+    </p>
 </body>
 </html>
