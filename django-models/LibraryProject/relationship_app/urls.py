@@ -22,9 +22,9 @@ urlpatterns = [
     path("admin-view/", admin_view, name = "admin-view"),
     path("librarian-view/", librarian_view, name = 'librarian-view'),
     path("member-view/", member_view, name = 'member-view'),
-    path('add-book/', views.add_book, name = "add-book"),
-    path('change-book/<int:pk>/', views.change_book, name = 'change-book'),
-    path('delete-book/<int:pk>/', views.delete_book, name = 'delete-book')
+    path('add_book/', views.add_book, name = "add-book"),
+    path('edit_book/<int:pk>/', views.change_book, name = 'edit-book'),
+    path('delete_book/<int:pk>/', views.delete_book, name = 'delete-book')
 
     
 

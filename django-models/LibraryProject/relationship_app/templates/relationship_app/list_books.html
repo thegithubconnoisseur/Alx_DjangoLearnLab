@@ -10,7 +10,7 @@
     <ul>
         {% for book in books %}
         <li>{{book.title}} by {{book.author.name}}</li>
-        <form method = 'post' action = " {% url 'change-book' book.pk %}">
+        <form method = 'post' action = " {% url 'edit-book' book.pk %}">
             {% csrf_token %}
             <button type = 'submit'> Change Book </button>
         </form>
