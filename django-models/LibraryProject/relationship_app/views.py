@@ -83,7 +83,7 @@ def change_book(request, pk):
     return render(request,"relationship_app/change_book.html", {"book": book})
 
 
-@permission_required("relationship_app.can_delete_bool", raise_exception = True)
+@permission_required("relationship_app.can_delete_book", raise_exception = True)
 def delete_book(request,pk):
     book = Book.objects.get(id = pk)
 
