@@ -9,7 +9,7 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('author', 'publication_year')
     search_fields = ('title', 'author')
 
-class ModelAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin):
     model = CustomUser
 
     fieldsets = UserAdmin.fieldsets + (("Additional Info",
@@ -22,7 +22,7 @@ class ModelAdmin(UserAdmin):
 
 
 admin.site.register(Book, BookAdmin)
-admin.site.register(CustomUser, ModelAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
 
     
 
