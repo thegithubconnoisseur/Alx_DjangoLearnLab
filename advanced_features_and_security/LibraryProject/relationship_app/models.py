@@ -1,0 +1,56 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+# Create your models here.
+class Author(models.Model):
+    name = models.CharField()
+
+    def __str__(self):
+        return self.name
+
+class Book(models.Model):
+    title = models.CharField()
+    author = models.ForeignKey(Author, on_delete = models.CASCADE)
+
+    class Meta:
+        permissions = [
+            ("can_add_book", "Can add book"),
+            ("can_change_book", "Can change book"),
+            ("can_delete_book", "Can delete book")
+        ]
+
+    def __str__(self):
+        return self.title
+
+class Library(models.Model):
+    name = models.CharField()
+    books = models.ManyToManyField(Book)
+
+    def __str__(self):
+        return self.name
+
+class Librarian(models.Model):
+    name = models.CharField()
+    library = models.OneToOneField(Library, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.name 
+
+
+#USER PROFILE MODEL
+User = get_user_model()
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+
+    ROLE_CHOICES = {
+        "ADMIN": "Admin",
+        "LIBRARIAN": "Librarian",
+        "MEMBER": "Member"
+    }
+
+    role = models.CharField(max_length = 10, choices = ROLE_CHOICES, default = 'MEMBER')
+
+    def __str__(self):
+        return self.user.username
