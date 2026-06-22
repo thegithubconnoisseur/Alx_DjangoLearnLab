@@ -1,0 +1,3 @@
+####### Permissions and user authentication #########
+
+I created user permissions using the meta class in the book model to read, create, edit and delete files. Then i created views for can_edit, can_create and can_delete, tied them to the relationship app html for a test run and used them to create users who can only edit view and administrate. I assigned each group permissions and then assigned custom made users to the various groups. I then used the permission required decorator to block acess to the views based on assigned groups.

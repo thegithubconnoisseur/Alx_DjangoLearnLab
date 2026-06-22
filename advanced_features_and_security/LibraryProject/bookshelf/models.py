@@ -6,8 +6,15 @@ from django.contrib.auth.models import BaseUserManager
 class Book(models.Model):
     title = models.CharField(max_length = 200)
     author = models.CharField(max_length = 100)
-    publication_year = models.IntegerField()
+    publication_year = models.IntegerField(null = True, blank = True)
 
+    class Meta:
+        permissions = [
+            ("can_view", "Can View"),
+            ("can_create", "Can Create"),
+            ("can_edit", "Can Edit"),
+            ("can_delete", "Can Delete")
+        ]
     def __str__(self):
         return self.title
 
@@ -45,7 +52,7 @@ class CustomUser(AbstractUser):
     profile_photo = models.ImageField(null = True, blank = True)
 
     object = CustomUserManager()
-    
+
     def __str__(self):
         return self.username
     
