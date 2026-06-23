@@ -26,15 +26,6 @@ SECRET_KEY = 'django-insecure-4uur)=czcfad+j5e^g4p$7%gi(ip$&yvrvd(##cu1%i26rpi4l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = "DENY"
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
-
-
 ALLOWED_HOSTS = []
 
 
@@ -151,3 +142,30 @@ CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'",)
 CSP_IMG_SRC = ("'self'", "data:")
+
+# Secure Headers
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "DENY"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enforce Secure Cookies
+# Cookies session and csrf only sent over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+
+# HTTPS SETTTINGS
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Tell browsers to remember that this site uses HTTPS only
+# 31536000 = 1 year
+SECURE_HSTS_SECONDS = 31536000
+
+# apply HSTS rule to all subdomains
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# Allow the domain to be included in browser HSTS preload lists
+SECURE_HSTS_RELOAD = True
+
+
