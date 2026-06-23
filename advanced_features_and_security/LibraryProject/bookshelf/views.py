@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required
 from .models import Book
+from .forms import ExampleForm 
 
 # Create your views here.
 @permission_required("bookshelf.can_view", raise_exception = True)
@@ -21,6 +22,18 @@ def can_create(request):
         return redirect("list")
     return render(request, "relationship_app/add_book.html")
 
+def create_book(request):
+
+    if request.method == "POST":
+        form = ExampleForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect("list")
+        
+    else :
+        form = ExampleForm()
+    return render(request,"relationship_app/add_book.html",{"form":form})
 
 @permission_required("bookshelf.can_edit", raise_exception = True)
 def can_edit(request,pk):
