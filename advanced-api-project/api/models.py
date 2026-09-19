@@ -23,7 +23,7 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField()
     publication_year = models.IntegerField()
-    author = models.ForeignKey(Author, on_delete = models.CASCADE)
+    author = models.ForeignKey(Author, on_delete = models.CASCADE, related_name = 'books')
     slug = models.SlugField(unique = True)
 
     def save(self, *args, **kwargs):
