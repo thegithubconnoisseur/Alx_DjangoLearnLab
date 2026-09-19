@@ -3,26 +3,30 @@ from .models import Book
 from .models import Author
 from datetime import date
 
-# Book Serializer with a custom validation function
-# To ensure that publication year is not in the future
+# Created a book serializer class to list book models
+# This comes with a custom made author related field that is written
+# so that author comes with its string dunder method
 class BookSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     class Meta:
         model = Book
         fields = '__all__'
-    
-    # overwritten validation method
+
+    # Validate here is overwritten to raise a validation error on the serializer
+    # if  year input in the model is greater than todays year
     def validate(self, attribute):
         year = attribute.get("publication_year")
+
         if year and year > date.today().year:
             raise serializers.ValidationError({"publication_year" : "Publication year cannot be in the future"})
         return attribute
 
-# Author serializer with a nested book serializer
-# that is derived from the Book serializer with key name
-# book
+# Author serializer class created with a books custome field 
+# this book field is drawn from the book serializer and can be multiple but is not required 
+# to make author serializer object
 class AuthorSerializer(serializers.ModelSerializer):
-    book = BookSerializer(many = True, required = False)
+    books = BookSerializer(many = True, required = False)
     class Meta:
         model = Author
-        fields = ['id', 'name', 'book']
+        fields = ['id', 'name', 'books']
+
