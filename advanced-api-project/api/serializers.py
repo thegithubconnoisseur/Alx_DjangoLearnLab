@@ -25,7 +25,7 @@ class BookSerializer(serializers.ModelSerializer):
 # this book field is drawn from the book serializer and can be multiple but is not required 
 # to make author serializer object
 class AuthorSerializer(serializers.ModelSerializer):
-    books = BookSerializer(many = True, required = False, read_only = True)
+    books = BookSerializer(many = True, read_only = True, required = False)
     class Meta:
         model = Author
         fields = ['id', 'name', 'books']
