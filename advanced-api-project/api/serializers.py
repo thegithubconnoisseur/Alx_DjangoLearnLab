@@ -7,6 +7,8 @@ from datetime import date
 # This comes with a custom made author related field that is written
 # so that author comes with its string dunder method
 class BookSerializer(serializers.ModelSerializer):
+    # created an author name becuase author is a required field that accepts id
+    # on postman and for some reason it keeps requiring the author field
     author_name = serializers.StringRelatedField(source = 'author', read_only = True )
     class Meta:
         model = Book
