@@ -7,7 +7,7 @@ from django.utils.text import slugify
 # mdoel name
 class Author(models.Model):
     name = models.CharField()
-    slug = models.SlugField(unique = True)
+    slug = models.SlugField(unique = True, blank = True, null = True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -24,7 +24,7 @@ class Book(models.Model):
     title = models.CharField()
     publication_year = models.IntegerField()
     author = models.ForeignKey(Author, on_delete = models.CASCADE, related_name = 'books')
-    slug = models.SlugField(unique = True)
+    slug = models.SlugField(unique = True, blank = True, null = True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

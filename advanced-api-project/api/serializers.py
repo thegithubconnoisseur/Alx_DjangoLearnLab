@@ -7,10 +7,10 @@ from datetime import date
 # This comes with a custom made author related field that is written
 # so that author comes with its string dunder method
 class BookSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField()
+    author_name = serializers.StringRelatedField(source = 'author', read_only = True )
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ['id', 'title', 'publication_year', 'author', 'author_name', 'slug']
 
     # Validate here is overwritten to raise a validation error on the serializer
     # if  year input in the model is greater than todays year
