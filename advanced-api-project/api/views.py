@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, filters, viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Book
 from .models import Author
 from .serializers import BookSerializer
@@ -14,7 +15,7 @@ class ListView(generics.ListAPIView):
     # to find or list data sets
     filter_backends = [filters.SearchFilter]
     search_fields = ['title','author']
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     ## with modifying get  queryset isntead
     # when typing the url instead of using ?search to get query data
@@ -35,7 +36,7 @@ class DetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author']
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         queryset = Book.objects.all()
@@ -50,7 +51,7 @@ class CreateView(generics.CreateAPIView):
     serializer_class = BookSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['title','author']
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = Book.objects.all()
@@ -65,7 +66,7 @@ class UpdateView(generics.UpdateAPIView):
     serializer_class = BookSerializer
     filter_backends = [filters.SearchFilter]
     search_fileds = ['title', 'author']
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         queryset = Book.objects.all()
@@ -80,7 +81,7 @@ class DeleteView(generics.DestroyAPIView):
     serializer_class = BookSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author']
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         queryset = Book.objects.all()
