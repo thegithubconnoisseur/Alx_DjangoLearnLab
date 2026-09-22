@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, filters, viewsets
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import rest_framework
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Book
 from .models import Author
@@ -14,7 +14,7 @@ class ListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     # This allows the use of urlpath/?search =
     # to find or list data sets
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
+    filter_backends = [filters.SearchFilter, rest_framework.DjangoFilterBackend, filters.OrderingFilter]
     # Rather than creating a filters.py file
     # i set the filterset_fields to handle names that contain
     # and match in upper and lower case forms for filtering
@@ -47,7 +47,7 @@ class DetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, rest_framework.DjangoFilterBackend]
     filterset_fields = {
         "title" : ["iexact", "icontains"],
         "author__name" : ["iexact", "icontains"],
