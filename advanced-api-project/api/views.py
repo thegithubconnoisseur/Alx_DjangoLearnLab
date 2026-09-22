@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, filters, viewsets
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Book
 from .models import Author
@@ -13,8 +14,20 @@ class ListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
     # This allows the use of urlpath/?search =
     # to find or list data sets
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
+    # Rather than creating a filters.py file
+    # i set the filterset_fields to handle names that contain
+    # and match in upper and lower case forms for filtering
+    filterset_fields = {
+        "title" : ["iexact", "icontains"],
+        "author__name" : ["iexact", "icontains"],
+        "publication_year" : ["exact", "gte", "lte"]
+        }
     search_fields = ['title','author']
+    ordering_fileds = ["title","author", "publication_year"]
+    # i set the defualt order to sort by publication_year from
+    # latest to oldest then by title
+    ordering = ["-publication_year", "title"]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     ## with modifying get  queryset isntead
@@ -34,8 +47,15 @@ class DetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    filterset_fields = {
+        "title" : ["iexact", "icontains"],
+        "author__name" : ["iexact", "icontains"],
+        "publication_year" : ["exact", "gte", "lte"]
+    }
     search_fields = ['title', 'author']
+    ordering_fields = ["title", "author"]
+    ordering = ["-publication_year", "title"]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
